@@ -7,7 +7,8 @@ import { dbConnection } from "./database/dbConnection.js";
 import  messageRouter from "./router/messageRouter.js"
 import { errorMiddleware } from "./middlewares/errorMiddleware.js"
 import userRouter from "./router/userRouter.js";
-import appointmentRouter from "./router/appointmentRouter.js"
+import 
+appointmentRouter from "./router/appointmentRouter.js"
 
 const app = express();
 config({ path: "./config.env" });
@@ -30,9 +31,19 @@ app.use(
     tempFileDir: "/tmp/",
   })
 );
+const router = express.Router()
+router.get("/", (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*")
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Max-Age", "1800");
+  res.setHeader("Access-Control-Allow-Headers", "content-type");
+  res.setHeader( "Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, PATCH, OPTIONS" ); 
+   });
 app.use("/api/v1/message", messageRouter);
 app.use("/api/v1/user",userRouter)
 app.use("/api/v1/appointment",appointmentRouter)
+
+
 
 dbConnection();
 
